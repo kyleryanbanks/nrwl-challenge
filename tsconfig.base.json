@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@nrwl-challenge/features/list": ["libs/features/list/src/index.ts"],
-      "@nrwl-challenge/features/details": ["libs/features/details/src/index.ts"]
+      "@nrwl-challenge/features/details": [
+        "libs/features/details/src/index.ts"
+      ],
+      "@nrwl-challenge/shells/tickets": ["libs/shells/tickets/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

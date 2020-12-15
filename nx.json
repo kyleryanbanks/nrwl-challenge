@@ -35,6 +35,9 @@
     },
     "features-details": {
       "tags": ["scope:tickets", "type:feature"]
+    },
+    "shells-tickets": {
+      "tags": ["scope:tickets", "type:shell"]
     }
   }
 }

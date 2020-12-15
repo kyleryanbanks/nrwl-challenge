@@ -169,6 +169,32 @@
           }
         }
       }
+    },
+    "shells-tickets": {
+      "projectType": "library",
+      "root": "libs/shells/tickets",
+      "sourceRoot": "libs/shells/tickets/src",
+      "prefix": "nrwl-challenge",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shells/tickets/tsconfig.lib.json",
+              "libs/shells/tickets/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shells/tickets/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shells/tickets"],
+          "options": {
+            "jestConfig": "libs/shells/tickets/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -3,5 +3,6 @@ module.exports = {
     '<rootDir>/apps/tickets',
     '<rootDir>/libs/features/list',
     '<rootDir>/libs/features/details',
+    '<rootDir>/libs/shells/tickets',
   ],
 };
