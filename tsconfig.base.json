@@ -19,7 +19,8 @@
       "@nrwl-challenge/features/details": [
         "libs/features/details/src/index.ts"
       ],
-      "@nrwl-challenge/shells/tickets": ["libs/shells/tickets/src/index.ts"]
+      "@nrwl-challenge/shells/tickets": ["libs/shells/tickets/src/index.ts"],
+      "@nrwl-challenge/data/tickets": ["libs/data/tickets/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

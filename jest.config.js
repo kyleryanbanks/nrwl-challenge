@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/libs/features/list',
     '<rootDir>/libs/features/details',
     '<rootDir>/libs/shells/tickets',
+    '<rootDir>/libs/data/tickets',
   ],
 };

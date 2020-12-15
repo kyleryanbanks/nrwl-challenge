@@ -38,6 +38,9 @@
     },
     "shells-tickets": {
       "tags": ["scope:tickets", "type:shell"]
+    },
+    "data-tickets": {
+      "tags": ["scope:tickets", "type:data"]
     }
   }
 }
