@@ -29,6 +29,9 @@
     "tickets-e2e": {
       "tags": [],
       "implicitDependencies": ["tickets"]
+    },
+    "features-list": {
+      "tags": ["scope:tickets", "type:feature"]
     }
   }
 }
