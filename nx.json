@@ -32,6 +32,9 @@
     },
     "features-list": {
       "tags": ["scope:tickets", "type:feature"]
+    },
+    "features-details": {
+      "tags": ["scope:tickets", "type:feature"]
     }
   }
 }

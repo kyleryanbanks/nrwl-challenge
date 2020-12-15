@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nrwl-challenge/features/list": ["libs/features/list/src/index.ts"]
+      "@nrwl-challenge/features/list": ["libs/features/list/src/index.ts"],
+      "@nrwl-challenge/features/details": ["libs/features/details/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
