@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Ticket } from '@nrwl-challenge/data/tickets';
 
 @Component({
   selector: 'nrwl-challenge-ticket',
-  template: `
-    <p>
-      ticket works!
-    </p>
-  `,
+  template: ` Ticket: {{ ticket.id }}, {{ ticket.description }} `,
   styles: [
-  ]
+    `
+      :host {
+        border-style: solid;
+        border-color: red;
+      }
+    `,
+  ],
 })
-export class TicketComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class TicketComponent {
+  @Input() ticket: Ticket;
 }
