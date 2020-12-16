@@ -1,20 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'nrwl-challenge-shell',
-  template: `
-    <p>
-      shell works!
-    </p>
-  `,
-  styles: [
-  ]
+  template: ` <router-outlet></router-outlet> `,
+  styles: [],
 })
-export class ShellComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class ShellComponent {}
