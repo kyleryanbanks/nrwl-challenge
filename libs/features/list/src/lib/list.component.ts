@@ -61,7 +61,7 @@ export class ListComponent implements OnInit {
 
   onAddTicket() {
     this.store.dispatch(
-      TicketActions.addNewTicket({ description: this.description.value })
+      TicketActions.createNewTicket({ description: this.description.value })
     );
     this.description.reset();
   }

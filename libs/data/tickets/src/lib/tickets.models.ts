@@ -1,6 +1,9 @@
 /**
  * Interface for the 'Tickets' data
  */
-export interface TicketsEntity {
-  id: string | number; // Primary ID
+export interface Ticket {
+  id: number;
+  description: string;
+  assigneeId: number;
+  completed: boolean;
 }

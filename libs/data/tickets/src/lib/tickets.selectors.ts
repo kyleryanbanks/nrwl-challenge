@@ -3,7 +3,6 @@ import {
   TICKETS_FEATURE_KEY,
   State,
   TicketsPartialState,
-  ticketsAdapter,
 } from './tickets.reducer';
 
 // Lookup the 'Tickets' feature state managed by NgRx
@@ -11,8 +10,6 @@ export const getTicketsState = createFeatureSelector<
   TicketsPartialState,
   State
 >(TICKETS_FEATURE_KEY);
-
-const { selectAll, selectEntities } = ticketsAdapter.getSelectors();
 
 export const getTicketsLoaded = createSelector(
   getTicketsState,
@@ -24,22 +21,7 @@ export const getTicketsError = createSelector(
   (state: State) => state.error
 );
 
-export const getAllTickets = createSelector(getTicketsState, (state: State) =>
-  selectAll(state)
-);
-
-export const getTicketsEntities = createSelector(
+export const getTickets = createSelector(
   getTicketsState,
-  (state: State) => selectEntities(state)
-);
-
-export const getSelectedId = createSelector(
-  getTicketsState,
-  (state: State) => state.selectedId
-);
-
-export const getSelected = createSelector(
-  getTicketsEntities,
-  getSelectedId,
-  (entities, selectedId) => selectedId && entities[selectedId]
+  (state: State) => state.tickets
 );

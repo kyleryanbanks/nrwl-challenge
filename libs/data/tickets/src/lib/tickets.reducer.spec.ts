@@ -1,4 +1,4 @@
-import { TicketsEntity } from './tickets.models';
+import { Ticket } from './tickets.models';
 import * as TicketsActions from './tickets.actions';
 import { State, initialState, reducer } from './tickets.reducer';
 
