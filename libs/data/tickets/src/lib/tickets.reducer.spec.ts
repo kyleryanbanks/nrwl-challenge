@@ -7,7 +7,7 @@ describe('Tickets Reducer', () => {
     ({
       id,
       name: name || `name-${id}`,
-    } as TicketsEntity);
+    } as Ticket);
 
   beforeEach(() => {});
 

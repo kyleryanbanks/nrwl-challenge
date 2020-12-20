@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
-import { Ticket } from '../tickets.models';
 
 /**
  * This service acts as a mock back-end.
@@ -11,6 +10,13 @@ import { Ticket } from '../tickets.models';
 export interface User {
   id: number;
   name: string;
+}
+
+export interface Ticket {
+  id: number;
+  description: string;
+  assigneeId: number;
+  completed: boolean;
 }
 
 function randomDelay() {

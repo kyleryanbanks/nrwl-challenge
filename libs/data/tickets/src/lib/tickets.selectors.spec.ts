@@ -1,4 +1,4 @@
-import { TicketsEntity } from './tickets.models';
+import { Ticket } from './tickets.models';
 import { State, ticketsAdapter, initialState } from './tickets.reducer';
 import * as TicketsSelectors from './tickets.selectors';
 
@@ -9,7 +9,7 @@ describe('Tickets Selectors', () => {
     ({
       id,
       name: name || `name-${id}`,
-    } as TicketsEntity);
+    } as Ticket);
 
   let state;
 

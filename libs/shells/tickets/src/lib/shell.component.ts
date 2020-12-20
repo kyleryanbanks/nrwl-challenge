@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TicketActions } from '@nrwl-challenge/data/tickets';
 
 @Component({
   selector: 'nrwl-challenge-shell',
@@ -12,4 +14,10 @@ import { Component } from '@angular/core';
     `,
   ],
 })
-export class ShellComponent {}
+export class ShellComponent implements OnInit {
+  constructor(private store: Store) {}
+
+  ngOnInit() {
+    this.store.dispatch(TicketActions.init());
+  }
+}

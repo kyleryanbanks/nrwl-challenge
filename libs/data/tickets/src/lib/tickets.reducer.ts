@@ -1,38 +1,43 @@
 import { createReducer, on, Action } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import * as TicketsActions from './tickets.actions';
 import { Ticket } from './tickets.models';
 
 export const TICKETS_FEATURE_KEY = 'tickets';
 
-export interface State {
+export interface State extends EntityState<Ticket> {
   selectedId?: string | number; // which Tickets record has been selected
   loaded: boolean; // has the Tickets list been loaded
   error?: string | null; // last known error (if any)
-  tickets: Ticket[];
 }
+
 export interface TicketsPartialState {
   readonly [TICKETS_FEATURE_KEY]: State;
 }
 
-export const initialState = {
-  loaded: false, // has the Tickets list been loaded
-  tickets: [],
-};
+export const ticketsAdapter: EntityAdapter<Ticket> = createEntityAdapter<
+  Ticket
+>();
+
+export const initialState: State = ticketsAdapter.getInitialState({
+  // set initial required properties
+  loaded: false,
+});
 
 const ticketsReducer = createReducer(
   initialState,
-  on(TicketsActions.loadTicketsSuccess, (state, { tickets }) => ({
+  on(TicketsActions.init, (state) => ({
     ...state,
-    tickets,
+    loaded: false,
+    error: null,
   })),
+  on(TicketsActions.loadTicketsSuccess, (state, { tickets }) =>
+    ticketsAdapter.setAll(tickets, { ...state, loaded: true })
+  ),
   on(TicketsActions.loadTicketsFailure, (state, { error }) => ({
     ...state,
     error,
-  })),
-  on(TicketsActions.createTicketsSuccess, (state, { ticket }) => ({
-    ...state,
-    tickets: [...state.tickets, ticket],
   }))
 );
 
