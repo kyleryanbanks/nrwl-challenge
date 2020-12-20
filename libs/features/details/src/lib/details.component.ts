@@ -12,11 +12,13 @@ import { startWith } from 'rxjs/operators';
   selector: 'nrwl-challenge-details',
   template: `
     <ng-container *ngIf="selectedTicket | async as ticket; else loading">
-      <h1>{{ ticket.description }}</h1>
+      <pre>{{ ticket | json }}</pre>
     </ng-container>
     <ng-template #loading>
       <p>Loading ticket: {{ id }}</p>
     </ng-template>
+
+    <a [routerLink]="['/tickets']">Back To List</a>
   `,
   styles: [],
 })
