@@ -50,7 +50,7 @@ export class ListComponent {
 
   onClick(ticket: Ticket) {
     this.details.save(ticket);
-    this.router.navigate(['tickets', ticket.id]);
+    this.router.navigate(['ticket', ticket.id]);
   }
 
   onAddTicket() {

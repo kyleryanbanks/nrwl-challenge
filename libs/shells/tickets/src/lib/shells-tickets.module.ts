@@ -20,7 +20,7 @@ export const shellsTicketsRoutes: Route[] = [
     component: ListComponent,
   },
   {
-    path: 'tickets/:id',
+    path: 'ticket/:id',
     component: DetailsComponent,
   },
 ];
