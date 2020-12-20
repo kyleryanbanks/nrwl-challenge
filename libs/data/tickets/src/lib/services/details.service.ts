@@ -11,7 +11,7 @@ export class DetailsService {
     this._ticket = ticket;
   }
 
-  load(): Observable<Ticket> {
-    return of(this._ticket);
+  load(): Ticket {
+    return this._ticket;
   }
 }

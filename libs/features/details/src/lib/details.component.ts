@@ -6,6 +6,7 @@ import {
   Ticket,
 } from '@nrwl-challenge/data/tickets';
 import { Observable } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'nrwl-challenge-details',
@@ -31,12 +32,13 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-    const preloadedTicket = this.details.load();
 
-    if (preloadedTicket) {
-      this.selectedTicket = preloadedTicket;
-    } else {
-      this.selectedTicket = this.backend.ticket(this.id);
-    }
+    this.checkForPreloadedTicket();
+  }
+
+  checkForPreloadedTicket() {
+    this.selectedTicket = this.backend
+      .ticket(this.id)
+      .pipe(startWith(this.details.load()));
   }
 }
