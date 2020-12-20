@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import {
   BackendService,
-  getTickets,
+  DetailsService,
   Ticket,
 } from '@nrwl-challenge/data/tickets';
-
-import { TicketActions } from '@nrwl-challenge/data/tickets';
 
 @Component({
   selector: 'nrwl-challenge-list',
@@ -26,7 +23,7 @@ import { TicketActions } from '@nrwl-challenge/data/tickets';
 
     <label>Ticket Description</label>
     <input [formControl]="description" />
-    <button (click)="onAddTicket()" [disabled]="description.invalid">
+    <button (click)="onAddTicket()" [disabled]="newTicketPending">
       Add Ticket
     </button>
   `,
@@ -38,31 +35,36 @@ import { TicketActions } from '@nrwl-challenge/data/tickets';
     `,
   ],
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   tickets = this.backend.tickets();
   users = this.backend.users();
+  newTicketPending = false;
 
   description = new FormControl('', [Validators.required]);
 
   constructor(
-    private backend: BackendService,
+    public backend: BackendService,
     private router: Router,
-    private store: Store
+    private details: DetailsService
   ) {}
 
-  ngOnInit() {
-    this.store.dispatch(TicketActions.init());
-  }
-
   onClick(ticket: Ticket) {
-    this.store.dispatch(TicketActions.selectTicket({ ticket }));
+    this.details.save(ticket);
     this.router.navigate(['tickets', ticket.id]);
   }
 
   onAddTicket() {
-    this.store.dispatch(
-      TicketActions.createNewTicket({ description: this.description.value })
-    );
-    this.description.reset();
+    if (!this.newTicketPending) {
+      this.description.disable();
+      this.newTicketPending = true;
+
+      this.backend
+        .newTicket({ description: this.description.value })
+        .subscribe(() => {
+          this.description.reset();
+          this.description.enable();
+          this.newTicketPending = false;
+        });
+    }
   }
 }
