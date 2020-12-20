@@ -21,9 +21,11 @@ import {
       </li>
     </ul>
 
-    <label>Ticket Description</label>
-    <input [formControl]="description" />
-    <button (click)="onAddTicket()" [disabled]="newTicketPending">
+    <input placeholder="Ticket Description" [formControl]="description" />
+    <button
+      (click)="onAddTicket()"
+      [disabled]="newTicketPending || description.invalid"
+    >
       Add Ticket
     </button>
   `,
