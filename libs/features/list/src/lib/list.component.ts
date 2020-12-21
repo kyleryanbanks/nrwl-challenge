@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BackendService, getAllTickets } from '@nrwl-challenge/data/tickets';
+import {
+  BackendService,
+  getAllTickets,
+  TicketActions,
+} from '@nrwl-challenge/data/tickets';
 
 @Component({
   selector: 'nrwl-challenge-list',
@@ -20,7 +24,7 @@ import { BackendService, getAllTickets } from '@nrwl-challenge/data/tickets';
 
     <input placeholder="Ticket Description" [formControl]="description" />
     <button
-      (click)="onAddTicket()"
+      (click)="onAddTicket(description.value)"
       [disabled]="newTicketPending || description.invalid"
     >
       Add Ticket
@@ -50,18 +54,8 @@ export class ListComponent {
     this.router.navigate(['ticket', id]);
   }
 
-  onAddTicket() {
-    if (!this.newTicketPending) {
-      this.description.disable();
-      this.newTicketPending = true;
-
-      this.backend
-        .newTicket({ description: this.description.value })
-        .subscribe(() => {
-          this.description.reset();
-          this.description.enable();
-          this.newTicketPending = false;
-        });
-    }
+  onAddTicket(description: string) {
+    this.store.dispatch(TicketActions.createNewTicket({ description }));
+    this.description.reset();
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { BackendService } from './services';
 import * as TicketsActions from './tickets.actions';
 import { Ticket } from './tickets.models';
@@ -18,6 +19,20 @@ export class TicketsEffects {
               TicketsActions.loadTicketsSuccess({ tickets: [...tickets] })
             )
           )
+      )
+    )
+  );
+
+  newTicket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TicketsActions.createNewTicket),
+      mergeMap(({ description }) =>
+        this.backend.newTicket({ description }).pipe(
+          map((ticket) => TicketsActions.createTicketSuccess({ ticket })),
+          catchError((error) =>
+            of(TicketsActions.createTicketFailure({ error }))
+          )
+        )
       )
     )
   );

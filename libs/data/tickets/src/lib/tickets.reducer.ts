@@ -17,7 +17,7 @@ export interface TicketsPartialState {
 
 export const ticketsAdapter: EntityAdapter<Ticket> = createEntityAdapter<
   Ticket
->();
+>({ selectId: (entity) => entity.id });
 
 export const initialState: State = ticketsAdapter.getInitialState({
   // set initial required properties
@@ -37,7 +37,10 @@ const ticketsReducer = createReducer(
   on(TicketsActions.loadTicketsFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(TicketsActions.createTicketSuccess, (state, { ticket }) =>
+    ticketsAdapter.addOne(ticket, state)
+  )
 );
 
 export function reducer(state: State | undefined, action: Action) {

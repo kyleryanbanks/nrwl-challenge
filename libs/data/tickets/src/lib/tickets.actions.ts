@@ -14,13 +14,18 @@ export const loadTicketsFailure = createAction(
 );
 
 export const createNewTicket = createAction(
-  '[Tickets] Create New Ticket',
+  '[Tickets] Create Ticket',
   props<{ description: string }>()
 );
 
-export const createTicketsSuccess = createAction(
-  '[Tickets/API] Load Tickets Success',
+export const createTicketSuccess = createAction(
+  '[Tickets/API] Create Ticket Success',
   props<{ ticket: Ticket }>()
+);
+
+export const createTicketFailure = createAction(
+  '[Tickets/API] Create Ticket Failure',
+  props<{ error: any }>()
 );
 
 export const completeTicket = createAction(
