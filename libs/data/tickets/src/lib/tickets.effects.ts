@@ -15,7 +15,7 @@ export class TicketsEffects {
           .tickets()
           .pipe(
             map((tickets: Ticket[]) =>
-              TicketsActions.loadTicketsSuccess({ tickets })
+              TicketsActions.loadTicketsSuccess({ tickets: [...tickets] })
             )
           )
       )
