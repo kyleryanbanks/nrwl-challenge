@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  BackendService,
-  DetailsService,
-  Ticket,
-} from '@nrwl-challenge/data/tickets';
+import { Store } from '@ngrx/store';
+import { BackendService, getAllTickets } from '@nrwl-challenge/data/tickets';
 
 @Component({
   selector: 'nrwl-challenge-list',
@@ -16,7 +13,7 @@ import {
       <li *ngFor="let ticket of tickets | async">
         <nrwl-challenge-ticket
           [ticket]="ticket"
-          (click)="onClick(ticket)"
+          (click)="onClick(ticket.id)"
         ></nrwl-challenge-ticket>
       </li>
     </ul>
@@ -38,21 +35,19 @@ import {
   ],
 })
 export class ListComponent {
-  tickets = this.backend.tickets();
-  users = this.backend.users();
+  tickets = this.store.select(getAllTickets);
   newTicketPending = false;
 
   description = new FormControl('', [Validators.required]);
 
   constructor(
+    private store: Store,
     public backend: BackendService,
-    private router: Router,
-    private details: DetailsService
+    private router: Router
   ) {}
 
-  onClick(ticket: Ticket) {
-    this.details.save(ticket);
-    this.router.navigate(['ticket', ticket.id]);
+  onClick(id: number) {
+    this.router.navigate(['ticket', id]);
   }
 
   onAddTicket() {

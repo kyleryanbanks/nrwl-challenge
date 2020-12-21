@@ -1,17 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  BackendService,
-  DetailsService,
-  Ticket,
-} from '@nrwl-challenge/data/tickets';
+import { Store } from '@ngrx/store';
+import { getTicketById, Ticket } from '@nrwl-challenge/data/tickets';
 import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'nrwl-challenge-details',
   template: `
-    <ng-container *ngIf="selectedTicket | async as ticket; else loading">
+    <ng-container *ngIf="ticket | async as ticket; else loading">
       <pre>{{ ticket | json }}</pre>
     </ng-container>
     <ng-template #loading>
@@ -23,24 +19,13 @@ import { startWith } from 'rxjs/operators';
   styles: [],
 })
 export class DetailsComponent implements OnInit {
-  selectedTicket: Observable<Ticket>;
+  ticket: Observable<Ticket>;
   id: number;
 
-  constructor(
-    private details: DetailsService,
-    private activatedRoute: ActivatedRoute,
-    private backend: BackendService
-  ) {}
+  constructor(private store: Store, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params.id;
-
-    this.checkForPreloadedTicket();
-  }
-
-  checkForPreloadedTicket() {
-    this.selectedTicket = this.backend
-      .ticket(this.id)
-      .pipe(startWith(this.details.load()));
+    this.ticket = this.store.select(getTicketById(this.id));
   }
 }

@@ -33,13 +33,5 @@ export const getTicketsEntities = createSelector(
   (state: State) => selectEntities(state)
 );
 
-export const getSelectedId = createSelector(
-  getTicketsState,
-  (state: State) => state.selectedId
-);
-
-export const getSelected = createSelector(
-  getTicketsEntities,
-  getSelectedId,
-  (entities, selectedId) => selectedId && entities[selectedId]
-);
+export const getTicketById = (id: number) =>
+  createSelector(getTicketsEntities, (entites) => entites[id]);

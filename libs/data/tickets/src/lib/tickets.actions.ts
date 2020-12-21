@@ -37,8 +37,3 @@ export const updateFilters = createAction(
   '[Tickets] Update Filters',
   props<{ filters: any }>()
 );
-
-export const selectTicket = createAction(
-  '[Tickets] Select Ticket',
-  props<{ id: number }>()
-);

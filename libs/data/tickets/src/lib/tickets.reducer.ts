@@ -7,7 +7,6 @@ import { Ticket } from './tickets.models';
 export const TICKETS_FEATURE_KEY = 'tickets';
 
 export interface State extends EntityState<Ticket> {
-  selectedId?: string | number; // which Tickets record has been selected
   loaded: boolean; // has the Tickets list been loaded
   error?: string | null; // last known error (if any)
 }
