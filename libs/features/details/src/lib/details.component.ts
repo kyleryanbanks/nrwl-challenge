@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
       <pre>{{ ticket | json }}</pre>
     </ng-container>
     <ng-template #loading>
-      <p>Loading ticket: {{ id }}</p>
+      <h1>Searching for Ticket: {{ id }}...</h1>
+      <p>Please wait or use the link below to return to the list.</p>
     </ng-template>
 
     <a [routerLink]="['/tickets']">Back To List</a>
