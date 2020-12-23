@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -10,10 +10,12 @@ import { hot } from '@nrwl/angular/testing';
 
 import { TicketsEffects } from './tickets.effects';
 import * as TicketsActions from './tickets.actions';
+import { BackendService } from './services';
 
 describe('TicketsEffects', () => {
-  let actions: Observable<any>;
+  let actions$: Observable<any>;
   let effects: TicketsEffects;
+  let backend: BackendService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,23 +23,27 @@ describe('TicketsEffects', () => {
       providers: [
         TicketsEffects,
         DataPersistence,
-        provideMockActions(() => actions),
+        provideMockActions(() => actions$),
         provideMockStore(),
       ],
     });
 
-    effects = TestBed.get(TicketsEffects);
+    effects = TestBed.inject(TicketsEffects);
+    backend = TestBed.inject(BackendService);
   });
 
   describe('init$', () => {
-    it('should work', () => {
-      actions = hot('-a-|', { a: TicketsActions.init() });
+    it('should work', (done) => {
+      backend.tickets = () => of([]);
+      const mockAction = TicketsActions.init();
+      const expectedAction = TicketsActions.loadTicketsSuccess({ tickets: [] });
 
-      const expected = hot('-a-|', {
-        a: TicketsActions.loadTicketsSuccess({ tickets: [] }),
+      actions$ = of(mockAction);
+
+      effects.init$.subscribe((action) => {
+        expect(action).toEqual(expectedAction);
+        done();
       });
-
-      expect(effects.init$).toBeObservable(expected);
     });
   });
 });

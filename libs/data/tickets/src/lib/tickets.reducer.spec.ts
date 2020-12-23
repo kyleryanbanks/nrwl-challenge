@@ -1,28 +1,68 @@
-import { Ticket } from './tickets.models';
 import * as TicketsActions from './tickets.actions';
-import { State, initialState, reducer } from './tickets.reducer';
+import { createMockTicket } from './tickets.mocks';
+import { initialState, reducer, State } from './tickets.reducer';
 
 describe('Tickets Reducer', () => {
-  const createTicketsEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as Ticket);
-
   beforeEach(() => {});
 
   describe('valid Tickets actions', () => {
-    it('loadTicketsSuccess should return set the list of known Tickets', () => {
+    it('loadTicketsSuccess should set the list of known Tickets', () => {
       const tickets = [
-        createTicketsEntity('PRODUCT-AAA'),
-        createTicketsEntity('PRODUCT-zzz'),
+        createMockTicket({ id: 2 }),
+        createMockTicket({ id: 3 }),
       ];
       const action = TicketsActions.loadTicketsSuccess({ tickets });
 
       const result: State = reducer(initialState, action);
 
-      expect(result.loaded).toBe(true);
-      expect(result.ids.length).toBe(2);
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "entities": Object {
+            "2": Object {
+              "assigneeId": null,
+              "completed": false,
+              "description": "This is a mock ticket",
+              "id": 2,
+            },
+            "3": Object {
+              "assigneeId": null,
+              "completed": false,
+              "description": "This is a mock ticket",
+              "id": 3,
+            },
+          },
+          "ids": Array [
+            2,
+            3,
+          ],
+          "loaded": true,
+        }
+      `);
+    });
+
+    it('createTicketSuccess should add a ticket to the list of known Tickets', () => {
+      const ticket = createMockTicket({ id: 3 });
+
+      const action = TicketsActions.createTicketSuccess({ ticket });
+
+      const result: State = reducer(initialState, action);
+
+      expect(result).toMatchInlineSnapshot(`
+        Object {
+          "entities": Object {
+            "3": Object {
+              "assigneeId": null,
+              "completed": false,
+              "description": "This is a mock ticket",
+              "id": 3,
+            },
+          },
+          "ids": Array [
+            3,
+          ],
+          "loaded": false,
+        }
+      `);
     });
   });
 

@@ -1,15 +1,10 @@
-import { Ticket } from './tickets.models';
-import { State, ticketsAdapter, initialState } from './tickets.reducer';
+import { createMockTicket } from './tickets.mocks';
+import { initialState, ticketsAdapter } from './tickets.reducer';
 import * as TicketsSelectors from './tickets.selectors';
 
 describe('Tickets Selectors', () => {
   const ERROR_MSG = 'No Error Available';
   const getTicketsId = (it) => it['id'];
-  const createTicketsEntity = (id: string, name = '') =>
-    ({
-      id,
-      name: name || `name-${id}`,
-    } as Ticket);
 
   let state;
 
@@ -17,13 +12,12 @@ describe('Tickets Selectors', () => {
     state = {
       tickets: ticketsAdapter.setAll(
         [
-          createTicketsEntity('PRODUCT-AAA'),
-          createTicketsEntity('PRODUCT-BBB'),
-          createTicketsEntity('PRODUCT-CCC'),
+          createMockTicket({ id: 1 }),
+          createMockTicket({ id: 2 }),
+          createMockTicket({ id: 3 }),
         ],
         {
           ...initialState,
-          selectedId: 'PRODUCT-BBB',
           error: ERROR_MSG,
           loaded: true,
         }
@@ -37,14 +31,7 @@ describe('Tickets Selectors', () => {
       const selId = getTicketsId(results[1]);
 
       expect(results.length).toBe(3);
-      expect(selId).toBe('PRODUCT-BBB');
-    });
-
-    it('getSelected() should return the selected Entity', () => {
-      const result = TicketsSelectors.getSelected(state);
-      const selId = getTicketsId(result);
-
-      expect(selId).toBe('PRODUCT-BBB');
+      expect(selId).toBe(2);
     });
 
     it("getTicketsLoaded() should return the current 'loaded' status", () => {
